@@ -3,6 +3,10 @@
 # One-command operations for the entire pipeline
 # =============================================================
 
+# Load .env so dbt can read POSTGRES_PASSWORD etc.
+-include .env
+export
+
 .PHONY: help up down extract load dbt-run dbt-test pipeline clean status
 
 # Default target
