@@ -1,4 +1,4 @@
-# 🇳🇵 Nepal Power Grid & Cross-Border Energy Trade — Data Warehouse
+#  Nepal Power Grid & Cross-Border Energy Trade — Data Warehouse
 
 > An end-to-end data pipeline that digitizes NEA's daily NDOR (Nepal Daily Operational Report) PDFs into a queryable star-schema data warehouse with automated dashboards.
 
@@ -39,7 +39,7 @@ requests + pdfplumber    Clean CSVs     SQL COPY (upsert)   dbt run        SQL q
 
 ---
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### Prerequisites
 
@@ -87,7 +87,7 @@ make pipeline
 
 ---
 
-## 📊 What Gets Extracted
+##  What Gets Extracted
 
 Each NDOR PDF contains Nepal's daily power grid snapshot:
 
@@ -104,7 +104,7 @@ Each NDOR PDF contains Nepal's daily power grid snapshot:
 
 ### Derived Metrics (computed by dbt)
 
-- **Season classification**: Monsoon 🌧️ / Dry ☀️ / Pre-monsoon 🌤️
+- **Season classification**: Monsoon  / Dry  / Pre-monsoon 
 - **Nepal Fiscal Year**: e.g., 2081/82 (starts mid-July)
 - **Import dependency ratio**: % of energy from imports
 - **NEA vs IPP generation share**: Government vs private
@@ -112,7 +112,7 @@ Each NDOR PDF contains Nepal's daily power grid snapshot:
 
 ---
 
-## 🏗️ Project Structure
+##  Project Structure
 
 ```
 nea-data-warehouse/
@@ -123,22 +123,22 @@ nea-data-warehouse/
 ├── .env.example                      # Environment variables template
 ├── .github/workflows/ci.yml          # CI: pytest + dbt build
 │
-├── extractor/                        # 📥 PDF Extraction Engine
+├── extractor/                        #  PDF Extraction Engine
 │   ├── extract.py                    # Core pdfplumber extraction logic
 │   ├── download.py                   # Download PDFs from NEA website
 │   ├── bs_calendar.py                # Bikram Sambat ↔ Gregorian converter
 │   └── utils.py                      # Data cleaning helpers
 │
-├── data/                             # 💾 Local Data Lake
+├── data/                             #  Local Data Lake
 │   ├── *.pdf                         # Sample NDOR PDFs (committed)
 │   ├── raw_pdfs/                     # Downloaded PDFs (gitignored)
 │   └── bronze/                       # Extracted CSVs (gitignored)
 │
-├── db/                               # 🗄️ Database
+├── db/                               #  Database
 │   ├── init.sql                      # Schema + table creation
 │   └── load.py                       # CSV → PostgreSQL loader (upsert)
 │
-├── dbt_nea/                          # 📐 dbt Transformations
+├── dbt_nea/                          #  dbt Transformations
 │   ├── models/
 │   │   ├── staging/stg_nea_daily.sql # Cleaned + enriched staging
 │   │   ├── dimensions/
@@ -149,16 +149,16 @@ nea-data-warehouse/
 │   │   └── energy_balance_check.sql  # Data quality test
 │   └── profiles.yml                  # DB connection (uses env vars)
 │
-├── airflow/                          # ⏰ Orchestration
+├── airflow/                          #  Orchestration
 │   └── dags/nea_pipeline_dag.py      # Daily pipeline DAG
 │
-└── tests/                            # ✅ Test Suite
+└── tests/                            #  Test Suite
     └── test_extract.py               # pytest extraction tests
 ```
 
 ---
 
-## 🔬 Data Model (Star Schema)
+##  Data Model (Star Schema)
 
 ```
                     ┌─────────────────┐
@@ -191,7 +191,7 @@ nea-data-warehouse/
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ```bash
 # Run pytest extraction tests
@@ -227,7 +227,7 @@ cd dbt_nea && dbt test --profiles-dir .
 
 ---
 
-## 📈 Sample Dashboard Queries
+##  Sample Dashboard Queries
 
 ```sql
 -- Daily generation trend
@@ -253,7 +253,7 @@ ORDER BY report_date_ad;
 
 ---
 
-## 🔒 Security
+##  Security
 
 - **Credentials**: All secrets managed via `.env` file (gitignored)
 - **dbt**: Uses `env_var()` — no plaintext passwords in committed files
@@ -262,10 +262,10 @@ ORDER BY report_date_ad;
 
 ---
 
-## 👤 Author
+##  Author
 
 **Aayush Paudel** 
-B.Sc. CSIT | Data Engineering Portfolio Project
+Data Engineering Portfolio Project
 
 ---
 
