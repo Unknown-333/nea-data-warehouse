@@ -1,0 +1,109 @@
+version: 2
+
+sources:
+  - name: raw
+    database: nea_warehouse
+    schema: raw
+    tables:
+      - name: daily_grid_report
+        description: "Raw daily grid report data from NDOR PDFs"
+        loaded_at_field: extracted_at
+        freshness:
+          warn_after: { count: 48, period: hour }
+          error_after: { count: 72, period: hour }
+        columns:
+          - name: report_date_ad
+            description: "Report date in Gregorian calendar"
+            tests:
+              - not_null
+              - unique
+          - name: report_date_bs
+            description: "Report date in Bikram Sambat calendar"
+            tests:
+              - not_null
+          - name: total_generation_mwh
+            description: "Total electricity generated (NEA + IPP) in MWh"
+            tests:
+              - not_null
+          - name: net_energy_met_mwh
+            description: "Net energy consumed within the country in MWh"
+          - name: peak_demand_mw
+            description: "Peak power demand in MW"
+
+models:
+  - name: stg_nea_daily
+    description: "Staging model - cleaned and typed daily grid report"
+    columns:
+      - name: report_date_ad
+        description: "Report date (Gregorian)"
+        tests:
+          - not_null
+          - unique
+      - name: total_generation_mwh
+        description: "Total generation in MWh (NULL if extraction failed, never falsely 0)"
+        tests:
+          - not_null
+      - name: nea_generation_mwh
+        description: "NEA (government) generation in MWh"
+        tests:
+          - not_null
+      - name: ipp_generation_mwh
+        description: "Independent Power Producer generation in MWh"
+        tests:
+          - not_null
+      - name: total_import_mwh
+        description: "Total energy imported in MWh"
+        tests:
+          - not_null
+      - name: season
+        description: "Hydrological season: monsoon, dry, or pre_monsoon"
+        tests:
+          - accepted_values:
+              values: ['monsoon', 'dry', 'pre_monsoon']
+      - name: fiscal_year
+        description: "Nepal fiscal year string e.g. 2081/82"
+        tests:
+          - not_null
+      - name: import_dependency_pct
+        description: "Percentage of energy supply that comes from imports"
+
+  - name: dim_date
+    description: "Date dimension with BS/AD dates, season, fiscal year"
+    columns:
+      - name: date_key
+        description: "Gregorian date as surrogate key"
+        tests:
+          - not_null
+          - unique
+      - name: season
+        tests:
+          - accepted_values:
+              values: ['monsoon', 'dry', 'pre_monsoon']
+      - name: bs_month
+        description: "Bikram Sambat month (1-12)"
+      - name: is_weekend
+        description: "True if Saturday (Nepal's weekend)"
+
+  - name: fact_daily_generation
+    description: "Fact table - daily generation, import, export, demand metrics"
+    columns:
+      - name: report_date_ad
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: total_generation_mwh
+        tests:
+          - not_null
+      - name: nea_generation_pct
+        description: "NEA share of total generation (0-100)"
+      - name: ipp_generation_pct
+        description: "IPP share of total generation (0-100)"
+      - name: import_dependency_pct
+        description: "Import dependency ratio (0-100)"
+      - name: season
+        tests:
+          - accepted_values:
+              values: ['monsoon', 'dry', 'pre_monsoon']

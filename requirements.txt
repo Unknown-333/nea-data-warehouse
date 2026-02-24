@@ -1,0 +1,22 @@
+# PDF Extraction
+pdfplumber>=0.10.0
+requests>=2.31.0
+
+# Data Processing
+pandas>=2.0.0
+
+# Database
+psycopg2-binary>=2.9.0
+
+# Date Conversion (Bikram Sambat)
+nepali-datetime>=1.0.7
+
+# Config
+python-dotenv>=1.0.0
+
+# dbt (Data Build Tool)
+dbt-core>=1.7.0
+dbt-postgres>=1.7.0
+
+# Testing
+pytest>=7.0.0

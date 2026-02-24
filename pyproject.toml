@@ -1,0 +1,11 @@
+[project]
+name = "nea-data-warehouse"
+version = "1.0.0"
+description = "Nepal Power Grid & Cross-Border Energy Trade Data Warehouse"
+requires-python = ">=3.9"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_functions = "test_*"
+addopts = "-v --tb=short"
