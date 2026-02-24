@@ -202,18 +202,18 @@ cd dbt_nea && dbt test --profiles-dir .
 ```
 
 ### What's tested:
-- ✅ Numeric cleaning (commas, parentheses, dashes, None)
-- ✅ BS↔AD date conversion roundtrip
-- ✅ Season/fiscal year classification
-- ✅ PDF extraction against known values (5 sample PDFs)
-- ✅ Batch extraction CSV output
-- ✅ Energy balance validation (dbt)
-- ✅ Data quality (not_null, unique, accepted_values)
-- ✅ Error-path handling (corrupt PDFs, missing tables)
+-  Numeric cleaning (commas, parentheses, dashes, None)
+- BS↔AD date conversion roundtrip
+-  Season/fiscal year classification
+- PDF extraction against known values (5 sample PDFs)
+- Batch extraction CSV output
+-  Energy balance validation (dbt)
+-  Data quality (not_null, unique, accepted_values)
+-  Error-path handling (corrupt PDFs, missing tables)
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Tool | Purpose | Why This One |
 |------|---------|-------------|
@@ -269,6 +269,6 @@ Data Engineering Portfolio Project
 
 ---
 
-## 📝 License
+##  License
 
 This project is for educational/portfolio purposes. NEA data is publicly available.
