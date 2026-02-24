@@ -11,7 +11,7 @@
 
 ---
 
-## 📐 Architecture
+##  Architecture
 
 ```
 requests + pdfplumber    Clean CSVs     SQL COPY (upsert)   dbt run        SQL queries
