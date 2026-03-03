@@ -51,7 +51,7 @@ requests + pdfplumber    Clean CSVs     SQL COPY (upsert)   dbt run        SQL q
 
 ```bash
 # 1. Clone the repo
-git clone <your-repo-url>
+git clone https://github.com/Unknown-333/nea-data-warehouse
 cd nea-data-warehouse
 
 # 2. Configure environment
